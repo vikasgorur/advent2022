@@ -53,6 +53,8 @@ function badgeForGroup(lines: number[][]): number {
 function solution1() {
   const lines = readFileSync("src/three/input.txt", "utf-8").split("\n");
 
+  console.time("solution1");
+
   let sum = 0;
   for (let l of lines) {
     let line: number[] = _.map(l.split(""), itemPriority);
@@ -60,11 +62,13 @@ function solution1() {
   }
 
   console.log(sum);
+  console.timeEnd("solution1");
 }
 
 function solution2() {
   const lines = readFileSync("src/three/input.txt", "utf-8").split("\n");
 
+  console.time("solution2");
   let sum = 0;
   let i = 0;
   while (i < lines.length - 3) {
@@ -73,6 +77,7 @@ function solution2() {
     sum += badgeForGroup(group);
     i += 3;
   }
+  console.timeEnd("solution2");
 
   console.log(sum);
 }
