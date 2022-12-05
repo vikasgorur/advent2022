@@ -1,3 +1,3 @@
-import { solution } from "./four";
+import { solution } from "./five";
 
 solution();
