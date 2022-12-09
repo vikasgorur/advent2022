@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@types/underscore": "^1.11.4",
+    "colors": "^1.4.0",
     "underscore": "^1.13.6"
   }
 }
