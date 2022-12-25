@@ -71,7 +71,7 @@ function countVisibleTrees(): number {
   return count;
 }
 
-export function solution() {
+function solution1() {
   const lines = readFileSync("src/eight/input.txt", "utf-8").split("\n");
 
   console.time("solution1");
@@ -86,4 +86,66 @@ export function solution() {
   console.timeEnd("solution1");
 
   console.log(visible);
+}
+
+function scenicScore(r: number, c: number): number {
+  let viewDistance = function(
+    line: number[],
+    pos: number,
+    direction: 1 | -1
+  ): number {
+
+    let distance = 0;
+    if (direction == -1) {
+      for (let i = pos-1; i >= 0; i--) {
+        distance++;
+        if (line[i] >= line[pos]) { return distance; }
+      }
+    } else if (direction == 1) {
+      for (let i = pos+1; i < line.length; i++) {
+        distance++;
+        if (line[i] >= line[pos]) { return distance; }
+      }
+    }
+
+    return distance;
+  }
+
+  let left = viewDistance(rows[r], c, -1);
+  let right = viewDistance(rows[r], c, 1);
+  let up = viewDistance(cols[c], r, -1);
+  let down = viewDistance(cols[c], r, 1);
+
+  //console.log(`(${r}, ${c}) left: ${left}, right: ${right}, up: ${up}, down: ${down}`);
+  return left * right * up * down;
+}
+
+function solution2() {
+  const lines = readFileSync("src/eight/input.txt", "utf-8").split("\n");
+
+  console.time("solution2");
+  for (let r = 0; r < lines.length; r++) {
+    let trees = lines[r].split("").map(Number);
+    for (let c = 0; c < trees.length; c++) {
+      addTree(r, c, trees[c]);
+    }
+  }
+
+  let maxScenicScore = 0;
+  for (let r = 0; r < rows.length; r++) {
+    for (let c = 0; c < cols.length; c++) {
+      let score = scenicScore(r, c);
+      //console.log(`${r}, ${c}: ${score}`);
+      if (score > maxScenicScore) {
+        maxScenicScore = score;
+      }
+    }
+  }
+  console.timeEnd("solution2");
+
+  console.log(maxScenicScore);
+}
+
+export function solution() {
+  solution2();
 }
